@@ -4,6 +4,7 @@ How to infer emotion with MLKit?
 
 ## Demo
 ![mlkit-gif](https://user-images.githubusercontent.com/24838521/64917039-72247880-d7c6-11e9-9e25-b95857336dc0.gif)
+(It is not me.)
 
 ## Description
 https://www.slideshare.net/HiromuTsuruta/firebase-mlkit-172038578
