@@ -43,11 +43,9 @@ final class MonitorViewController: UIViewController {
     
     private var isLaugh: Bool = false
     
-    
     private let captureSession = AVCaptureSession()
     private var videoOutput = AVCaptureVideoDataOutput()
     private let videoDevice = AVCaptureDevice.default(for: AVMediaType.video)
-    private let audioDevice = AVCaptureDevice.default(for: AVMediaType.audio)
     
     private lazy var videoLayer: AVCaptureVideoPreviewLayer = {
         return AVCaptureVideoPreviewLayer(session: captureSession)
@@ -59,7 +57,11 @@ final class MonitorViewController: UIViewController {
         /// 実装の都合上、今回は毎回DBをリセットする
         ConnectionManager.shared.remove(by: .faces)
         
+        initialView()
         requestPermission()
+        CaptureVideoManager.shared.requestPermission { _ in
+            
+        }
     }
 }
 
@@ -79,11 +81,8 @@ private extension MonitorViewController {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self = self, granted else { return }
             
-            DispatchQueue.main.async {
-                self.initialSession()
-                self.initialView()
-                self.startRecording()
-            }
+            self.initialSession()
+            self.startRecording()
         }
     }
     
@@ -102,7 +101,7 @@ private extension MonitorViewController {
     
     func initialView() {
         videoLayer.frame = self.view.bounds
-        videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        videoLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(videoLayer)
         
         view.equalToConstraint(for: controlButton, with: [
@@ -141,7 +140,7 @@ private extension MonitorViewController {
         }
         
         updateIcon(by: params)
-        ConnectionManager.shared.write(by: .faces, params: params)
+//        ConnectionManager.shared.write(by: .faces, params: params)
     }
     
     func updateIcon(by params: [String: Any]) {
