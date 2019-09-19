@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		42351A62232C77C600BBBF0F /* UICollectionView+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42351A38232C77C500BBBF0F /* UICollectionView+Util.swift */; };
 		42351A63232C77C600BBBF0F /* UIViewController+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42351A39232C77C500BBBF0F /* UIViewController+Util.swift */; };
 		42351A64232C77C600BBBF0F /* URL+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42351A3A232C77C500BBBF0F /* URL+Util.swift */; };
 		42351A65232C77C600BBBF0F /* NSObject+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42351A3B232C77C500BBBF0F /* NSObject+Util.swift */; };
@@ -73,7 +72,6 @@
 /* Begin PBXFileReference section */
 		013BA2E9BA1941FE396EDF35 /* Pods_firebase_hackathonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firebase_hackathonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0942B138404B88EF3AA649D3 /* Pods-firebase_hackathonUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firebase_hackathonUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-firebase_hackathonUITests/Pods-firebase_hackathonUITests.release.xcconfig"; sourceTree = "<group>"; };
-		42351A38232C77C500BBBF0F /* UICollectionView+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Util.swift"; sourceTree = "<group>"; };
 		42351A39232C77C500BBBF0F /* UIViewController+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Util.swift"; sourceTree = "<group>"; };
 		42351A3A232C77C500BBBF0F /* URL+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Util.swift"; sourceTree = "<group>"; };
 		42351A3B232C77C500BBBF0F /* NSObject+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Util.swift"; sourceTree = "<group>"; };
@@ -188,7 +186,6 @@
 				42351A50232C77C500BBBF0F /* UIAlertController+Util.swift */,
 				42351A55232C77C500BBBF0F /* UIApplication+Util.swift */,
 				42351A60232C77C600BBBF0F /* UIButton+Rx.swift */,
-				42351A38232C77C500BBBF0F /* UICollectionView+Util.swift */,
 				42351A56232C77C600BBBF0F /* UIColor+Util.swift */,
 				42351A43232C77C500BBBF0F /* UIControl+Util.swift */,
 				42351A49232C77C500BBBF0F /* UIImage+Util.swift */,
@@ -582,7 +579,6 @@
 				42351A89232C77C600BBBF0F /* AVAsynchronousKeyValueLoading+Rx.swift in Sources */,
 				42351A81232C77C600BBBF0F /* UITableView+Util.swift in Sources */,
 				42351A65232C77C600BBBF0F /* NSObject+Util.swift in Sources */,
-				42351A62232C77C600BBBF0F /* UICollectionView+Util.swift in Sources */,
 				42351A71232C77C600BBBF0F /* AVPlayerItem+Rx.swift in Sources */,
 				42351A6C232C77C600BBBF0F /* AVPlayer+Rx.swift in Sources */,
 				42351A80232C77C600BBBF0F /* UIColor+Util.swift in Sources */,

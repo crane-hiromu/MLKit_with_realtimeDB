@@ -19,25 +19,25 @@ final class ConnectionManager {
     
     private let reference = Database.database().reference()
     
-    func write(params: [String: Any]) {
-        let userReference = reference.child(Keys.faces.rawValue)
+    func write(by key: Keys, params: [String: Any]) {
+        let userReference = reference.child(key.rawValue)
         userReference.childByAutoId().setValue(params)
     }
     
-    func remove() {
-        let userReference = reference.child(Keys.faces.rawValue)
+    func remove(by key: Keys) {
+        let userReference = reference.child(key.rawValue)
         userReference.removeValue()
     }
     
-    func connect() {
-        let userReference = reference.child(Keys.faces.rawValue)
+    func connect(by key: Keys) {
+        let userReference = reference.child(key.rawValue)
         userReference.observe(.childAdded) { snap in
             // do something
         }
     }
 
-    func disconnect() {
-        let userReference = reference.child(Keys.faces.rawValue)
+    func disconnect(by key: Keys) {
+        let userReference = reference.child(key.rawValue)
         userReference.removeAllObservers()
     }
 }

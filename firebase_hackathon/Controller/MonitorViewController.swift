@@ -57,7 +57,7 @@ final class MonitorViewController: UIViewController {
         super.viewDidLoad()
         
         /// 実装の都合上、今回は毎回DBをリセットする
-        ConnectionManager.shared.remove()
+        ConnectionManager.shared.remove(by: .faces)
         
         requestPermission()
     }
@@ -141,7 +141,7 @@ private extension MonitorViewController {
         }
         
         updateIcon(by: params)
-        ConnectionManager.shared.write(params: params)
+        ConnectionManager.shared.write(by: .faces, params: params)
     }
     
     func updateIcon(by params: [String: Any]) {
