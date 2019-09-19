@@ -16,7 +16,6 @@ final class CaptureVideoManager {
     private let captureSession = AVCaptureSession()
     private var videoOutput = AVCaptureVideoDataOutput()
     private let videoDevice = AVCaptureDevice.default(for: AVMediaType.video)
-    private let videoQueue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
     
     func requestPermission(completion: @escaping (Bool) -> Void) {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
@@ -31,14 +30,20 @@ final class CaptureVideoManager {
     
     func initialSession() {
         guard let vDevice = videoDevice, let vInput = try? AVCaptureDeviceInput(device: vDevice) else {
-            print("error: non videoDevice")
+            debugPrint("error: non videoDevice")
             return
         }
+        
+//        vDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: Int32(0))
+//        vDevice.unlockForConfiguration()
+        
         captureSession.addInput(vInput)
         
-        let queue: DispatchQueue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
+        let videoQueue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
 //        videoOutput.setSampleBufferDelegate(self, queue: queue)
         videoOutput.alwaysDiscardsLateVideoFrames = true
+        
+        guard captureSession.canAddOutput(videoOutput) else { return }
         captureSession.addOutput(videoOutput)
     }
 }
