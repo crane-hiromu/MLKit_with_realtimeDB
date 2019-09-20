@@ -24,7 +24,7 @@ final class MonitorViewController: UIViewController {
         btn.borderWidth = 0.5
         btn.rx.tap.asDriver().drive(onNext: { [weak self] in
             guard let self = self else { return }
-            self.stopRecording()
+            CaptureVideoManager.shared.stopRecording()
             self.dismiss(animated: true)
         }).disposed(by: rx.disposeBag)
         return btn
@@ -51,16 +51,25 @@ final class MonitorViewController: UIViewController {
         return AVCaptureVideoPreviewLayer(session: captureSession)
     }()
     
+    // MARK: Override
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /// 実装の都合上、今回は毎回DBをリセットする
-        ConnectionManager.shared.remove(by: .faces)
+//        /// 実装の都合上、今回は毎回DBをリセットする
+//        ConnectionManager.shared.remove(by: .faces)
         
         initialView()
-        requestPermission()
-        CaptureVideoManager.shared.requestPermission { _ in
-            
+        CaptureVideoManager.shared.requestPermission { result in
+            switch result {
+            case .success(let output):
+                let videoQueue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
+                output.setSampleBufferDelegate(self, queue: videoQueue)
+                
+            case .failure:
+                // do some error habdling
+                break
+            }
         }
     }
 }
@@ -76,28 +85,6 @@ extension MonitorViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 private extension MonitorViewController {
-    
-    func requestPermission() {
-        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
-            guard let self = self, granted else { return }
-            
-            self.initialSession()
-            self.startRecording()
-        }
-    }
-    
-    func initialSession() {
-        guard let vDevice = videoDevice, let vInput = try? AVCaptureDeviceInput(device: vDevice) else {
-            print("--- error: no videoDevice ---")
-            return
-        }
-        captureSession.addInput(vInput)
-        
-        let queue: DispatchQueue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
-        videoOutput.setSampleBufferDelegate(self, queue: queue)
-        videoOutput.alwaysDiscardsLateVideoFrames = true
-        captureSession.addOutput(videoOutput)
-    }
     
     func initialView() {
         videoLayer.frame = self.view.bounds
@@ -125,7 +112,7 @@ private extension MonitorViewController {
         let result = FacialDetector.shared.detectFaces(
             buffer: buffer,
             orientation: UIDevice.current.orientation,
-            position: AVCaptureDevice.Position.front
+            position: AVCaptureDevice.Position.back
         )
         
         guard let faces = result else {
@@ -159,12 +146,5 @@ private extension MonitorViewController {
             }
         }
     }
-    
-    func startRecording() {
-        captureSession.startRunning()
-    }
 
-    func stopRecording() {
-        captureSession.stopRunning()
-    }
 }

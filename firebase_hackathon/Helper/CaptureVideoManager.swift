@@ -17,14 +17,16 @@ final class CaptureVideoManager {
     private var videoOutput = AVCaptureVideoDataOutput()
     private let videoDevice = AVCaptureDevice.default(for: AVMediaType.video)
     
-    func requestPermission(completion: @escaping (Bool) -> Void) {
+    func requestPermission(completion: @escaping (CaptureVideoResult) -> Void) {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self = self else { return }
             
             if granted {
                 self.initialSession()
+                completion(.success(output: self.videoOutput))
+            } else {
+                completion(.failure)
             }
-            completion(granted)
         }
     }
     
@@ -46,4 +48,17 @@ final class CaptureVideoManager {
         guard captureSession.canAddOutput(videoOutput) else { return }
         captureSession.addOutput(videoOutput)
     }
+    
+    func startRecording() {
+        captureSession.startRunning()
+    }
+    
+    func stopRecording() {
+        captureSession.stopRunning()
+    }
+}
+
+enum CaptureVideoResult {
+    case success(output: AVCaptureVideoDataOutput)
+    case failure
 }
