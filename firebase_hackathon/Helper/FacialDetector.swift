@@ -14,51 +14,54 @@ final class FacialDetector {
     static let shared = FacialDetector()
     private init() {}
     
-    private lazy var vision = Vision.vision()
     private var counter = 0
+    private lazy var vision = Vision.vision()
     
-    func detectFaces(buffer: CMSampleBuffer,
-                     orientation: UIDeviceOrientation,
-                     position: AVCaptureDevice.Position) -> [VisionFace]? {
-        
-        let metadata = VisionImageMetadata()
-        metadata.orientation = imageOrientation(deviceOrientation: orientation, cameraPosition: position)
-        
-        let visionImage = VisionImage(buffer: buffer)
-        visionImage.metadata = metadata
-        
+    private let detectorOptions: VisionFaceDetectorOptions = {
         let options = VisionFaceDetectorOptions()
         options.performanceMode = .accurate
         options.landmarkMode = .all
         options.contourMode = .none
         options.classificationMode = .all
         options.isTrackingEnabled = true
+        return options
+    }()
+}
+
+extension FacialDetector {
+    
+    func detectFaces(buffer: CMSampleBuffer,
+                     orientation: UIDeviceOrientation,
+                     position: AVCaptureDevice.Position) -> [VisionFace]? {
         
-        let faceDetector = vision.faceDetector(options: options)
-        var detectedFaces: [VisionFace]? = nil
-        do {
-            detectedFaces = try faceDetector.results(in: visionImage)
-        } catch let error {
-            print("Failed to detect faces with error: \(error.localizedDescription).")
+        let metadata = VisionImageMetadata()
+        metadata.orientation = imageOrientation(orientation: orientation, position: position)
+        
+        let visionImage = VisionImage(buffer: buffer)
+        visionImage.metadata = metadata
+        
+        let faceDetector = vision.faceDetector(options: detectorOptions)
+        
+        guard let faces = try? faceDetector.results(in: visionImage), !faces.isEmpty else {
+            debugPrint("Failed to detect faces")
+            return nil
         }
-        
-        guard let faces = detectedFaces, !faces.isEmpty else { return nil }
         return faces
     }
     
     /// fixme (検知の制度を)
-    private func imageOrientation(deviceOrientation: UIDeviceOrientation,
-                                  cameraPosition: AVCaptureDevice.Position) -> VisionDetectorImageOrientation {
+    private func imageOrientation(orientation: UIDeviceOrientation,
+                                  position: AVCaptureDevice.Position) -> VisionDetectorImageOrientation {
         
-        switch deviceOrientation {
+        switch orientation {
         case .portrait:
-            return cameraPosition == .front ? .leftTop : .rightTop
+            return position == .front ? .leftTop : .rightTop
         case .landscapeLeft:
-            return cameraPosition == .front ? .bottomLeft : .topLeft
+            return position == .front ? .bottomLeft : .topLeft
         case .portraitUpsideDown:
-            return cameraPosition == .front ? .rightBottom : .leftBottom
+            return position == .front ? .rightBottom : .leftBottom
         case .landscapeRight:
-            return cameraPosition == .front ? .topRight : .bottomRight
+            return position == .front ? .topRight : .bottomRight
         case .faceDown, .faceUp, .unknown:
             return .leftTop
         }

@@ -43,14 +43,6 @@ final class MonitorViewController: UIViewController {
     
     private var isLaugh: Bool = false
     
-    private let captureSession = AVCaptureSession()
-    private var videoOutput = AVCaptureVideoDataOutput()
-    private let videoDevice = AVCaptureDevice.default(for: AVMediaType.video)
-    
-    private lazy var videoLayer: AVCaptureVideoPreviewLayer = {
-        return AVCaptureVideoPreviewLayer(session: captureSession)
-    }()
-    
     // MARK: Override
     
     override func viewDidLoad() {
@@ -60,33 +52,21 @@ final class MonitorViewController: UIViewController {
 //        ConnectionManager.shared.remove(by: .faces)
         
         initialView()
-        CaptureVideoManager.shared.requestPermission { result in
-            switch result {
-            case .success(let output):
-                let videoQueue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
-                output.setSampleBufferDelegate(self, queue: videoQueue)
-                
-            case .failure:
-                // do some error habdling
-                break
-            }
-        }
+        requestPermission()
     }
 }
 
-extension MonitorViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension MonitorViewController: CaptureVideoManagerDelegate {
     
-    func captureOutput(_ output: AVCaptureOutput,
-                       didOutput sampleBuffer: CMSampleBuffer,
-                       from connection: AVCaptureConnection) {
-        
-        detectFaces(from: sampleBuffer)
+    func captureOutput(didOutput buffer: CMSampleBuffer) {
+        detectFaces(from: buffer)
     }
 }
 
 private extension MonitorViewController {
     
     func initialView() {
+        let videoLayer = CaptureVideoManager.shared.videoLayer
         videoLayer.frame = self.view.bounds
         videoLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(videoLayer)
@@ -104,6 +84,21 @@ private extension MonitorViewController {
             monitorImageView.widthAnchor.constraint(equalToConstant: 60),
             monitorImageView.heightAnchor.constraint(equalToConstant: 60)
         ])
+    }
+    
+    func requestPermission() {
+        CaptureVideoManager.shared.requestPermission { result in
+            switch result {
+            case .success(let manager):
+                manager.delegate = self
+                manager.initialSession()
+                manager.startRecording()
+                
+            case .failure:
+                // do some error handling
+                break
+            }
+        }
     }
     
     func detectFaces(from buffer: CMSampleBuffer) {
@@ -146,5 +141,4 @@ private extension MonitorViewController {
             }
         }
     }
-
 }

@@ -8,25 +8,52 @@
 
 import AVKit
 
-final class CaptureVideoManager {
+// MARK: - Delegate
+
+protocol CaptureVideoManagerDelegate: class {
+    func captureOutput(didOutput buffer: CMSampleBuffer)
+}
+
+
+// MARK: - Result
+
+enum CaptureVideoResult {
+    case success(_ manager: CaptureVideoManager)
+    case failure
+}
+
+
+// MARK: - Manager
+
+final class CaptureVideoManager: NSObject {
     
     static let shared = CaptureVideoManager()
-    private init() {}
+    private override init() {}
     
+    weak var delegate: CaptureVideoManagerDelegate?
+    lazy var videoLayer: AVCaptureVideoPreviewLayer = {
+        return AVCaptureVideoPreviewLayer(session: captureSession)
+    }()
     private let captureSession = AVCaptureSession()
-    private var videoOutput = AVCaptureVideoDataOutput()
-    private let videoDevice = AVCaptureDevice.default(for: AVMediaType.video)
+    private let videoDevice = AVCaptureDevice.default(for: .video)
+    private lazy var videoOutput: AVCaptureVideoDataOutput = {
+        let output = AVCaptureVideoDataOutput()
+        let queue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
+        output.setSampleBufferDelegate(self, queue: queue)
+        output.alwaysDiscardsLateVideoFrames = true
+        return output
+    }()
+}
+
+
+// MARK: - Internal
+
+extension CaptureVideoManager {
     
     func requestPermission(completion: @escaping (CaptureVideoResult) -> Void) {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self = self else { return }
-            
-            if granted {
-                self.initialSession()
-                completion(.success(output: self.videoOutput))
-            } else {
-                completion(.failure)
-            }
+            completion((granted ? .success(self) : .failure))
         }
     }
     
@@ -35,17 +62,7 @@ final class CaptureVideoManager {
             debugPrint("error: non videoDevice")
             return
         }
-        
-//        vDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: Int32(0))
-//        vDevice.unlockForConfiguration()
-        
         captureSession.addInput(vInput)
-        
-        let videoQueue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
-//        videoOutput.setSampleBufferDelegate(self, queue: queue)
-        videoOutput.alwaysDiscardsLateVideoFrames = true
-        
-        guard captureSession.canAddOutput(videoOutput) else { return }
         captureSession.addOutput(videoOutput)
     }
     
@@ -58,7 +75,15 @@ final class CaptureVideoManager {
     }
 }
 
-enum CaptureVideoResult {
-    case success(output: AVCaptureVideoDataOutput)
-    case failure
+
+// MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
+
+extension CaptureVideoManager: AVCaptureVideoDataOutputSampleBufferDelegate {
+    
+    func captureOutput(_ output: AVCaptureOutput,
+                       didOutput sampleBuffer: CMSampleBuffer,
+                       from connection: AVCaptureConnection) {
+        
+        delegate?.captureOutput(didOutput: sampleBuffer)
+    }
 }
