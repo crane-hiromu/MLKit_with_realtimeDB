@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D5BE09523332B6900541515 /* CaptureVideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5BE09423332B6900541515 /* CaptureVideoManager.swift */; };
 		42351A63232C77C600BBBF0F /* UIViewController+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42351A39232C77C500BBBF0F /* UIViewController+Util.swift */; };
 		42351A64232C77C600BBBF0F /* URL+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42351A3A232C77C500BBBF0F /* URL+Util.swift */; };
 		42351A65232C77C600BBBF0F /* NSObject+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42351A3B232C77C500BBBF0F /* NSObject+Util.swift */; };
@@ -72,6 +73,7 @@
 /* Begin PBXFileReference section */
 		013BA2E9BA1941FE396EDF35 /* Pods_firebase_hackathonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firebase_hackathonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0942B138404B88EF3AA649D3 /* Pods-firebase_hackathonUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firebase_hackathonUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-firebase_hackathonUITests/Pods-firebase_hackathonUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1D5BE09423332B6900541515 /* CaptureVideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureVideoManager.swift; sourceTree = "<group>"; };
 		42351A39232C77C500BBBF0F /* UIViewController+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Util.swift"; sourceTree = "<group>"; };
 		42351A3A232C77C500BBBF0F /* URL+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Util.swift"; sourceTree = "<group>"; };
 		42351A3B232C77C500BBBF0F /* NSObject+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Util.swift"; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			children = (
 				42351A8D232C7BF500BBBF0F /* FacialDetector.swift */,
 				42FCAE5F232CCFE60018DC33 /* ConnectionManager.swift */,
+				1D5BE09423332B6900541515 /* CaptureVideoManager.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				42351A8A232C77C600BBBF0F /* UIButton+Rx.swift in Sources */,
 				42351A7F232C77C600BBBF0F /* UIApplication+Util.swift in Sources */,
 				42351A73232C77C600BBBF0F /* UIImage+Util.swift in Sources */,
+				1D5BE09523332B6900541515 /* CaptureVideoManager.swift in Sources */,
 				42B852E8232BACBB00B68DCC /* ViewController.swift in Sources */,
 				42351A86232C77C600BBBF0F /* AVAsset+Rx.swift in Sources */,
 				42351A75232C77C600BBBF0F /* Collection+Util.swift in Sources */,
