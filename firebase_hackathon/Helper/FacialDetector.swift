@@ -77,7 +77,7 @@ extension FacialDetector {
                 params["timestamp"] = timestamp
                 print("timestamp: \(timestamp)")
             }
-            
+
 //            let frame = face.frame
             
 //            if face.hasHeadEulerAngleY {
@@ -103,25 +103,33 @@ extension FacialDetector {
 //                print("upperLipBottomPoints: \(upperLipBottomPoints)")
 //            }
             
-            if face.hasSmilingProbability {
-                let smileProb = face.smilingProbability * 100
-                params["smileProb"] = Int(smileProb)
-                debugPrint("smileProb: \(smileProb)")
+//            if face.hasSmilingProbability {
+//                let smileProb = face.smilingProbability * 100
+//                params["smileProb"] = Int(smileProb)
+//                debugPrint("smileProb: \(smileProb)")
+//            }
+//            if face.hasLeftEyeOpenProbability {
+//                let leftEyeOpenProb = face.leftEyeOpenProbability * 100
+//                params["leftEyeOpenProb"] = Int(leftEyeOpenProb)
+//                debugPrint("leftEyeOpenProb: \(leftEyeOpenProb)")
+//            }
+//            if face.hasRightEyeOpenProbability {
+//                let rightEyeOpenProb = face.rightEyeOpenProbability * 100
+//                params["rightEyeOpenProb"] = Int(rightEyeOpenProb)
+//                debugPrint("rightEyeOpenProb: \(rightEyeOpenProb)")
+//            }
+//            if face.hasTrackingID {
+//                let trackingId = face.trackingID
+//                params["trackingId"] = trackingId
+//                debugPrint("trackingId: \(trackingId)")
+//            }
+            /// オイラー Y の角度が正の場合、顔の右側がカメラに向いています。+ : 左を向いてる、- :右を向いている
+            if face.hasHeadEulerAngleY {
+                debugPrint("headEulerAngleY", face.headEulerAngleY)
             }
-            if face.hasLeftEyeOpenProbability {
-                let leftEyeOpenProb = face.leftEyeOpenProbability * 100
-                params["leftEyeOpenProb"] = Int(leftEyeOpenProb)
-                debugPrint("leftEyeOpenProb: \(leftEyeOpenProb)")
-            }
-            if face.hasRightEyeOpenProbability {
-                let rightEyeOpenProb = face.rightEyeOpenProbability * 100
-                params["rightEyeOpenProb"] = Int(rightEyeOpenProb)
-                debugPrint("rightEyeOpenProb: \(rightEyeOpenProb)")
-            }
-            if face.hasTrackingID {
-                let trackingId = face.trackingID
-                params["trackingId"] = trackingId
-                debugPrint("trackingId: \(trackingId)")
+            /// オイラー Z の角度が正である顔は、カメラを基準にして反時計回りに回転しています。
+            if face.hasHeadEulerAngleZ {
+                debugPrint("headEulerAngleZ", face.headEulerAngleZ)
             }
         }
         return params
