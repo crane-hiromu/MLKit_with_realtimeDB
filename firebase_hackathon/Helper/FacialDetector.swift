@@ -126,6 +126,13 @@ extension FacialDetector {
             /// オイラー Y の角度が正の場合、顔の右側がカメラに向いています。+ : 左を向いてる、- :右を向いている
             if face.hasHeadEulerAngleY {
                 debugPrint("headEulerAngleY", face.headEulerAngleY)
+                
+                if 0 < face.headEulerAngleY {
+                    FaceDirectionManager.shared.add(direction: .left)
+                } else {
+                    FaceDirectionManager.shared.add(direction: .right)
+                }
+                
             }
             /// オイラー Z の角度が正である顔は、カメラを基準にして反時計回りに回転しています。
             if face.hasHeadEulerAngleZ {

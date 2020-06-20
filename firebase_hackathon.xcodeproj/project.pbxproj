@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -49,6 +49,7 @@
 		42FCAE60232CCFE60018DC33 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FCAE5F232CCFE60018DC33 /* ConnectionManager.swift */; };
 		42FCAE65232CE16C0018DC33 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42FCAE64232CE16C0018DC33 /* Image.xcassets */; };
 		5AC053312B20C20606ED57E2 /* Pods_firebase_hackathonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013BA2E9BA1941FE396EDF35 /* Pods_firebase_hackathonTests.framework */; };
+		842AF657249DC8320051D28D /* FaceDirectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842AF656249DC8320051D28D /* FaceDirectionManager.swift */; };
 		9218C632EB113708A53FD9E5 /* Pods_firebase_hackathon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 568288C3EAE6B9633D6A45E8 /* Pods_firebase_hackathon.framework */; };
 		F3226F47FBDF69BE89E18EB8 /* Pods_firebase_hackathonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5555EC115D21EEDB79D61774 /* Pods_firebase_hackathonUITests.framework */; };
 /* End PBXBuildFile section */
@@ -123,6 +124,7 @@
 		5555EC115D21EEDB79D61774 /* Pods_firebase_hackathonUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firebase_hackathonUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		568288C3EAE6B9633D6A45E8 /* Pods_firebase_hackathon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_firebase_hackathon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3547B71061B729A3CA645E /* Pods-firebase_hackathon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firebase_hackathon.release.xcconfig"; path = "Pods/Target Support Files/Pods-firebase_hackathon/Pods-firebase_hackathon.release.xcconfig"; sourceTree = "<group>"; };
+		842AF656249DC8320051D28D /* FaceDirectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDirectionManager.swift; sourceTree = "<group>"; };
 		86363447C2D5A3577C5C8551 /* Pods-firebase_hackathon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firebase_hackathon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-firebase_hackathon/Pods-firebase_hackathon.debug.xcconfig"; sourceTree = "<group>"; };
 		9BB5D718572FAD2D81BDF21C /* Pods-firebase_hackathonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firebase_hackathonTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-firebase_hackathonTests/Pods-firebase_hackathonTests.release.xcconfig"; sourceTree = "<group>"; };
 		B1F2D9C4BD72135DC67F2E4E /* Pods-firebase_hackathonUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-firebase_hackathonUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-firebase_hackathonUITests/Pods-firebase_hackathonUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				42351A8D232C7BF500BBBF0F /* FacialDetector.swift */,
 				42FCAE5F232CCFE60018DC33 /* ConnectionManager.swift */,
 				1D5BE09423332B6900541515 /* CaptureVideoManager.swift */,
+				842AF656249DC8320051D28D /* FaceDirectionManager.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -361,7 +364,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = HIromu;
+				ORGANIZATIONNAME = Hiromu;
 				TargetAttributes = {
 					42B852E1232BACBB00B68DCC = {
 						CreatedOnToolsVersion = 10.1;
@@ -561,6 +564,7 @@
 				42FCAE57232CAC280018DC33 /* MonitorViewController.swift in Sources */,
 				42351A74232C77C600BBBF0F /* AVPlayerLayer+Rx.swift in Sources */,
 				42351A72232C77C600BBBF0F /* UIImageView+Util.swift in Sources */,
+				842AF657249DC8320051D28D /* FaceDirectionManager.swift in Sources */,
 				42351A8E232C7BF500BBBF0F /* FacialDetector.swift in Sources */,
 				42FCAE60232CCFE60018DC33 /* ConnectionManager.swift in Sources */,
 				42351A64232C77C600BBBF0F /* URL+Util.swift in Sources */,

@@ -29,7 +29,7 @@ final class MonitorViewController: UIViewController {
         }).disposed(by: rx.disposeBag)
         return btn
     }()
-    
+
     private lazy var monitorImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .white
@@ -50,6 +50,9 @@ final class MonitorViewController: UIViewController {
         
 //        /// 実装の都合上、今回は毎回DBをリセットする
 //        ConnectionManager.shared.remove(by: .faces)
+        
+        /// 今回は出さない
+        monitorImageView.isHidden = true
         
         initialView()
         requestPermission()
