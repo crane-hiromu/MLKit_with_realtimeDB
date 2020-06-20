@@ -55,14 +55,19 @@ extension FacialDetector {
         
         switch orientation {
         case .portrait:
+            debugPrint("----portrait")
             return position == .front ? .leftTop : .rightTop
         case .landscapeLeft:
+            debugPrint("----landscapeLeft")
             return position == .front ? .bottomLeft : .topLeft
         case .portraitUpsideDown:
+            debugPrint("----portraitUpsideDown")
             return position == .front ? .rightBottom : .leftBottom
         case .landscapeRight:
+            debugPrint("----landscapeRight")
             return position == .front ? .topRight : .bottomRight
         case .faceDown, .faceUp, .unknown:
+            debugPrint("----other")
             return .leftTop
         }
     }
@@ -123,15 +128,15 @@ extension FacialDetector {
 //                params["trackingId"] = trackingId
 //                debugPrint("trackingId: \(trackingId)")
 //            }
-            /// オイラー Y の角度が正の場合、顔の右側がカメラに向いています。+ : 左を向いてる、- :右を向いている
+            /// オイラー Y の角度が正の場合、顔の右側がカメラに向いています。+ : 右を向いている、- :左を向いてる
             if face.hasHeadEulerAngleY {
                 params["headEulerAngleY"] = Int(face.headEulerAngleY)
                 debugPrint("headEulerAngleY", face.headEulerAngleY)
                 
                 if 0 < face.headEulerAngleY {
-                    FaceDirectionManager.shared.add(direction: .left)
-                } else {
                     FaceDirectionManager.shared.add(direction: .right)
+                } else {
+                    FaceDirectionManager.shared.add(direction: .left)
                 }
                 
             }

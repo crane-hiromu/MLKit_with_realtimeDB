@@ -19,7 +19,9 @@ final class ViewController: UIViewController {
         didSet {
             startButton.rx.tap.asDriver().drive(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.present(MonitorViewController(), animated: true)
+                let vc = MonitorViewController(orientation: UIDevice.current.orientation)
+                vc.modalPresentationStyle = .overFullScreen
+                self.present(vc, animated: true)
             }).disposed(by: rx.disposeBag)
         }
     }
