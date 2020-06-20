@@ -31,6 +31,6 @@ final class FaceDirectionManager {
     }
     
     func reset() {
-        counters = (left: Int, right: Int)()
+        counters = (left: 0, right: 0)
     }
 }

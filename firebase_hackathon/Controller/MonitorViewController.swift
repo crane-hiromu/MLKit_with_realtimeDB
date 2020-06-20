@@ -25,10 +25,13 @@ final class MonitorViewController: UIViewController {
         btn.rx.tap.asDriver().drive(onNext: { [weak self] in
             guard let self = self else { return }
             CaptureVideoManager.shared.stopRecording()
+            debugPrint("----", FaceDirectionManager.shared.counters)
             self.dismiss(animated: true)
         }).disposed(by: rx.disposeBag)
         return btn
     }()
+    
+    
 
     private lazy var monitorImageView: UIImageView = {
         let imageView = UIImageView()
@@ -36,23 +39,14 @@ final class MonitorViewController: UIViewController {
         imageView.cornerRadius = 10
         imageView.borderColor = .gray
         imageView.borderWidth = 0.5
-        imageView.image = #imageLiteral(resourceName: "normal")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
-    private var isLaugh: Bool = false
     
     // MARK: Override
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        /// 実装の都合上、今回は毎回DBをリセットする
-//        ConnectionManager.shared.remove(by: .faces)
-        
-        /// 今回は出さない
-        monitorImageView.isHidden = true
         
         initialView()
         requestPermission()
@@ -130,16 +124,9 @@ private extension MonitorViewController {
     
     func updateIcon(by params: [String: Any]) {
         params.forEach {
-            if $0.key == "smileProb" {
-                isLaugh = 70 < $0.value as! Int
-                
+            if $0.key == "headEulerAngleY", let val = $0.value as? Int {
                 DispatchQueue.main.async {
-                    self.monitorImageView.image = self.isLaugh ? #imageLiteral(resourceName: "laugh") : #imageLiteral(resourceName: "normal")
-                }
-            } else if !isLaugh, $0.key == "leftEyeOpenProb" {
-                let isSleeping: Bool = ($0.value as! Int) < 10
-                DispatchQueue.main.async {
-                    self.monitorImageView.image = isSleeping ? #imageLiteral(resourceName: "sleep") : #imageLiteral(resourceName: "normal")
+                    self.monitorImageView.image = 0 < val ? #imageLiteral(resourceName: "left") : #imageLiteral(resourceName: "right")
                 }
             }
         }
