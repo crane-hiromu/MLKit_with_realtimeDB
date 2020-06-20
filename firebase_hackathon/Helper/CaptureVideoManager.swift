@@ -35,7 +35,8 @@ final class CaptureVideoManager: NSObject {
         return AVCaptureVideoPreviewLayer(session: captureSession)
     }()
     private let captureSession = AVCaptureSession()
-    private let videoDevice = AVCaptureDevice.default(for: .video)
+    private let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+
     private lazy var videoOutput: AVCaptureVideoDataOutput = {
         let output = AVCaptureVideoDataOutput()
         let queue = DispatchQueue(label: "videoOutput", attributes: .concurrent)
@@ -62,6 +63,8 @@ extension CaptureVideoManager {
             debugPrint("error: non videoDevice")
             return
         }
+        
+        guard captureSession.inputs.isEmpty else { return }
         captureSession.addInput(vInput)
         captureSession.addOutput(videoOutput)
     }

@@ -186,14 +186,11 @@ extension UIView {
     enum DashedLineType {
         case all, top, bottom, right, left
     }
-    ///
-
-    func instantiate<T: UIView>() -> T {
-        return UINib(nibName: className, bundle: nil).instantiate(withOwner: self, options: nil).first as! T
-    }
     
     static func instantiate<T: UIView>() -> T {
-        return UINib(nibName: className, bundle: nil).instantiate(withOwner: self, options: nil).first as! T
+        return UINib(nibName: className, bundle: nil)
+            .instantiate(withOwner: self, options: nil)
+            .first as! T
     }
     
     /// 親に合わせる
