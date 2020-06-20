@@ -119,16 +119,13 @@ private extension MonitorViewController {
         }
         
         updateIcon(by: params)
-//        ConnectionManager.shared.write(by: .faces, params: params)
     }
     
     func updateIcon(by params: [String: Any]) {
-        params.forEach {
-            if $0.key == "headEulerAngleY", let val = $0.value as? Int {
-                DispatchQueue.main.async {
-                    self.monitorImageView.image = 0 < val ? #imageLiteral(resourceName: "left") : #imageLiteral(resourceName: "right")
-                }
-            }
+        let result = params.first { $0.key == "headEulerAngleY" }?.value as? Int ?? 0
+        
+        DispatchQueue.main.async {
+            self.monitorImageView.image = 0 < result ? #imageLiteral(resourceName: "left") : #imageLiteral(resourceName: "right")
         }
     }
 }

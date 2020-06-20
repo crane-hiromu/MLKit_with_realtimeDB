@@ -64,6 +64,7 @@ extension CaptureVideoManager {
             return
         }
         
+        guard captureSession.inputs.isEmpty else { return }
         captureSession.addInput(vInput)
         captureSession.addOutput(videoOutput)
     }
